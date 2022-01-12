@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps example</title>
+    <title>Google Maps in Hirosaki</title>
     <style>
       #map_canvas {
         width: 600px;
@@ -19,11 +19,37 @@
     function initMap() {
       var myOptions = {
         zoom: 8,
-        center: {lat: 35, lng: 139.5},
+        center: {lat: 40.6074, lng: 140.4642},
         mapTypeId: google.maps.MapTypeId.TERRAIN,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        // Step 4. Customize displayed controls
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: true
       }
       var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+      // Step 2. Add custom icon
+
+      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+      var marker = new google.maps.Marker({
+        position: {lat: 40.6074, lng: 140.4642},
+        icon: iconBase + 'flag_maps.png',
+        map: map
+      });
+
+      // Step 3. Add info window
+
+      var contentString = '<div id="content"><h2 id="firstHeading" class="firstHeading">Hirosaki castle</h2><p>This is a castle made in Edo era. The castle is being moved due to the construction of the stone wall now.</p></div>';
+
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
     }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiV2ZbFIYuD3N4hzGLstSn2e4ZG5A7QlU&callback=initMap"
